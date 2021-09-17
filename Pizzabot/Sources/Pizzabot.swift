@@ -47,13 +47,9 @@ class Pizzabot {
     }
 
     func parseDeliveryAreaSize(_ input: String) throws -> CGSize {
-        let options: NSRegularExpression.Options = [.anchorsMatchLines]
-        
-        let pattern = try! NSRegularExpression(pattern: RegularExpression.areaSize.rawValue, options: options)
+        let gridResult = RegExHelper.firstMatch(string: input, pattern: RegularExpression.areaSize.rawValue)
 
-        let grid = pattern.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count))
-
-        guard let matchString = input[grid?.range], matchString.components(separatedBy: "x").count > 0 else {
+        guard let matchString = input[gridResult?.range], matchString.components(separatedBy: "x").count > 0 else {
             throw ParsingError.gridSizeNotFound
         }
             
@@ -66,11 +62,7 @@ class Pizzabot {
     }
 
     func parseDeliveryPoints(_ input: String) throws -> [Point] {
-        let options: NSRegularExpression.Options = [.anchorsMatchLines]
-        
-        let pattern = try! NSRegularExpression(pattern: RegularExpression.deliveryPoints.rawValue, options: options)
-        
-        let matches = pattern.matches(in: input, options: [], range: NSRange(location: 0, length: input.count))
+        let matches = RegExHelper.allMatches(string: input, pattern: RegularExpression.deliveryPoints.rawValue)
 
         guard matches.count > 0 else {
             throw ParsingError.gridSizeNotFound
