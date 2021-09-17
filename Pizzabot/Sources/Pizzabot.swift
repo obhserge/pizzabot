@@ -9,6 +9,12 @@ import Foundation
 
 class Pizzabot {
     
+    enum RegularExpression: String {
+        // [0-9]{1,} - from 0-9 match at least once, but potentially any number more.
+        case areaSize = "[0-9]{1,}x[0-9]{1,}"
+        case deliveryPoints = "([0-9]{1,},[ ]?[0-9]{1,})"
+    }
+    
     func start() {
         print("Enter command: ")
         
@@ -42,8 +48,8 @@ class Pizzabot {
 
     func parseDeliveryAreaSize(_ input: String) throws -> CGSize {
         let options: NSRegularExpression.Options = [.anchorsMatchLines]
-        // [0-9]{1,} - from 0-9 match at least once, but potentially any number more.
-        let pattern = try! NSRegularExpression(pattern: "[0-9]{1,}x[0-9]{1,}", options: options)
+        
+        let pattern = try! NSRegularExpression(pattern: RegularExpression.areaSize.rawValue, options: options)
 
         let grid = pattern.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count))
 
@@ -61,8 +67,8 @@ class Pizzabot {
 
     func parseDeliveryPoints(_ input: String) throws -> [Point] {
         let options: NSRegularExpression.Options = [.anchorsMatchLines]
-        // [0-9]{1,} - from 0-9 match at least once, but potentially any number more.
-        let pattern = try! NSRegularExpression(pattern: "([0-9]{1,},[ ]?[0-9]{1,})", options: options)
+        
+        let pattern = try! NSRegularExpression(pattern: RegularExpression.deliveryPoints.rawValue, options: options)
         
         let matches = pattern.matches(in: input, options: [], range: NSRange(location: 0, length: input.count))
 
