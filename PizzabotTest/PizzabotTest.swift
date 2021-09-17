@@ -19,10 +19,10 @@ class PizzabotTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testParseGridSize() throws {
+    func testParseDeliveryAreaSize() throws {
         do {
             let pizzabot = Pizzabot()
-            let gridSize = try pizzabot.parseGridSize("5x5")
+            let gridSize = try pizzabot.parseDeliveryAreaSize("5x5")
             XCTAssertEqual(gridSize, CGSize(width: 5, height: 5))
         } catch let error {
             XCTFail(error.localizedDescription)
@@ -32,8 +32,8 @@ class PizzabotTest: XCTestCase {
     func testParsePoints() throws {
         do {
             let pizzabot = Pizzabot()
-            let points = try pizzabot.parsePoints("(1, 3) (4,4)")
-            XCTAssertEqual(points, [CGPoint(x: 1, y: 3), CGPoint(x: 4, y: 4)])
+            let points = try pizzabot.parseDeliveryPoints("(1, 3) (4,4)")
+            XCTAssertEqual(points, [Point(x: 1, y: 3), Point(x: 4, y: 4)])
         } catch let error {
             XCTFail(error.localizedDescription)
         }

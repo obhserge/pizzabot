@@ -27,18 +27,20 @@ class Pizzabot {
             throw ParsingError.inputDataIsEmpty
         }
         do {
-            // Parse grid size
-            let gridSize = try parseGridSize(input)
+            // Parse playground size
+            let areaSize = try parseDeliveryAreaSize(input)
+            // Create playground with size
+            let deliveryArea = DeliveryArea(size: areaSize)
             // Parse input points
-            let points = try parsePoints(input)
+            let points = try parseDeliveryPoints(input)
             // Get pizzabot instructions
-            return try makeRoute(gridSize: gridSize, points: points)
+            return try makeRoute(area: deliveryArea, points: points)
         } catch {
             throw error
         }
     }
 
-    func parseGridSize(_ input: String) throws -> CGSize {
+    func parseDeliveryAreaSize(_ input: String) throws -> CGSize {
         let options: NSRegularExpression.Options = [.anchorsMatchLines]
         // [0-9]{1,} - from 0-9 match at least once, but potentially any number more.
         let pattern = try! NSRegularExpression(pattern: "[0-9]{1,}x[0-9]{1,}", options: options)
@@ -57,7 +59,7 @@ class Pizzabot {
         return CGSize(width: xDimension, height: yDimension)
     }
 
-    func parsePoints(_ input: String) throws -> [CGPoint] {
+    func parseDeliveryPoints(_ input: String) throws -> [Point] {
         let options: NSRegularExpression.Options = [.anchorsMatchLines]
         // [0-9]{1,} - from 0-9 match at least once, but potentially any number more.
         let pattern = try! NSRegularExpression(pattern: "([0-9]{1,},[ ]?[0-9]{1,})", options: options)
@@ -68,7 +70,7 @@ class Pizzabot {
             throw ParsingError.gridSizeNotFound
         }
         
-        var points: [CGPoint] = []
+        var points: [Point] = []
         
         for match in matches {
             guard let matchString = input[match.range] else {
@@ -85,30 +87,29 @@ class Pizzabot {
                 continue
             }
             
-            points.append(CGPoint(x: xValue, y: yValue))
+            points.append(Point(x: xValue, y: yValue))
         }
         
         return points
     }
 
-    func makeRoute(gridSize: CGSize, points: [CGPoint]) throws -> String {
-        guard points.count > 0, gridSize.width > 0, gridSize.height > 0 else {
+    func makeRoute(area: DeliveryArea, points: [Point]) throws -> String {
+        guard points.count > 0, !area.isEmpty else {
             throw RoutingError.badInputData
         }
         
-        var botPosition = CGPoint.zero
+        var botPosition = Point(x: 0, y: 0)
         
         var instructions: [ActionType] = []
         for point in points {
-            // Check if the point inside our bounds if not - skip
-            let deliverableRect = CGRect(origin: .zero, size: gridSize)
-            if !deliverableRect.contains(point) {
+            // Check if the point inside our area if not - skip
+            if !area.containPointInside(point.toCGPoint()) {
                 print("point: \(point) was skipped due to out of bounds")
                 continue
             }
             // Calculate movements by X and Y and get set of instructions
-            let movementsByX = Int(point.x - botPosition.x)
-            let movementsByY = Int(point.y - botPosition.y)
+            let movementsByX = point.x - botPosition.x
+            let movementsByY = point.y - botPosition.y
             instructions.append(contentsOf: makeHorizontallMovements(steps: movementsByX))
             instructions.append(contentsOf: makeVerticalMovements(steps: movementsByY))
             instructions.append(.dropPizza)
