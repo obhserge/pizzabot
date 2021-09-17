@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Pizzabot {
+class Pizzabot: PizzabotProtocol {
     
     enum RegularExpression: String {
         // [0-9]{1,} - from 0-9 match at least once, but potentially any number more.
