@@ -7,104 +7,14 @@
 
 import Foundation
 
-class Pizzabot: PizzabotProtocol {
+final class Pizzabot: PizzabotProtocol {
     
-    enum RegularExpression: String {
-        // [0-9]{1,} - from 0-9 match at least once, but potentially any number more.
-        case areaSize = "[0-9]{1,}x[0-9]{1,}"
-        case deliveryPoints = "([0-9]{1,},[ ]?[0-9]{1,})"
-    }
-    
-    func start() {
-        print("Enter command: ")
-        
-        let input = readLine()
-        do {
-            let route = try getRouteInstructions(input)
-            print("Pizzabot movements:", route)
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-
-    func getRouteInstructions(_ input: String?) throws -> String {
-        // If input command is nil or is empty we can't parse string
-        guard let input = input, !input.isEmpty else {
-            throw ParsingError.inputDataIsEmpty
-        }
-        do {
-            // Parse playground size
-            let areaSize = try parseDeliveryAreaSize(input)
-            // Create playground with size
-            let deliveryArea = DeliveryArea(size: areaSize)
-            // Parse input points
-            let points = try parseDeliveryPoints(input)
-            // Get pizzabot instructions
-            return try makeRoute(area: deliveryArea, points: points)
-        } catch {
-            throw error
-        }
-    }
-
-    func parseDeliveryAreaSize(_ input: String) throws -> CGSize {
-        let gridResult = RegExHelper.firstMatch(string: input, pattern: RegularExpression.areaSize.rawValue)
-
-        guard let matchString = input[gridResult?.range], matchString.components(separatedBy: "x").count > 0 else {
-            throw ParsingError.gridSizeNotFound
-        }
-            
-        let characters = matchString.components(separatedBy: "x")
-            
-        guard let xDimension = Int(characters.first),
-              let yDimension = Int(characters.last) else { throw ParsingError.badGridSize }
-        
-        return CGSize(width: xDimension, height: yDimension)
-    }
-
-    func parseDeliveryPoints(_ input: String) throws -> [Point] {
-        let matches = RegExHelper.allMatches(string: input, pattern: RegularExpression.deliveryPoints.rawValue)
-
-        guard matches.count > 0 else {
-            throw ParsingError.gridSizeNotFound
-        }
-        
-        var points: [Point] = []
-        
-        for match in matches {
-            guard let matchString = input[match.range] else {
-                continue
-            }
-            let componentsNoSpaces = matchString
-                .replacingOccurrences(of: " ", with: "")
-            
-            let components =
-                componentsNoSpaces.components(separatedBy: ",")
-            
-            guard let xValue = Int(components.first),
-                  let yValue = Int(components.last) else {
-                continue
-            }
-            
-            points.append(Point(x: xValue, y: yValue))
-        }
-        
-        return points
-    }
-
-    func makeRoute(area: DeliveryArea, points: [Point]) throws -> String {
-        guard points.count > 0, !area.isEmpty else {
-            throw RoutingError.badInputData
-        }
+    func getRouteInstructions(area: DeliveryArea, points: [Point]) -> String {
         
         var botPosition = Point(x: 0, y: 0)
         
         var instructions: [ActionType] = []
         for point in points {
-            // Check if the point inside our area if not - skip
-            if !area.containPointInside(point.toCGPoint()) {
-                print("point: \(point) was skipped due to out of bounds")
-                continue
-            }
             // Calculate movements by X and Y and get set of instructions
             let movementsByX = point.x - botPosition.x
             let movementsByY = point.y - botPosition.y

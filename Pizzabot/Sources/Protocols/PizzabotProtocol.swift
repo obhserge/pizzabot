@@ -8,5 +8,5 @@
 import Foundation
 
 protocol PizzabotProtocol {
-    func getRouteInstructions(_ input: String?) throws -> String
+    func getRouteInstructions(area: DeliveryArea, points: [Point]) -> String
 }
