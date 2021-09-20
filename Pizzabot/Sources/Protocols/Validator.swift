@@ -20,7 +20,7 @@ protocol Validator {
 
 enum ValidatorError: Error, Equatable {
     case badInput
-    case noPoints
+    case pointsNotFound
     case emptyDeliveryArea
 }
 
@@ -29,7 +29,7 @@ extension ValidatorError: LocalizedError {
         switch self {
         case .badInput:
             return "Validation error. Bad input data"
-        case .noPoints:
+        case .pointsNotFound:
             return "Validation error. Delivery points has not been found"
         case .emptyDeliveryArea:
             return "Validation error. Delivery area is empty"

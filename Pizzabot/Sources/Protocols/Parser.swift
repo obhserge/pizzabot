@@ -25,7 +25,7 @@ extension ParsingError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .deliveryPointsNotFound:
-            return "Parsing error. Delivery points has not been found"
+            return "Parsing error. Delivery points have not been found"
         case .deliveryAreaSizeNotFoundOrWrong:
             return "Parsing error. Delivery area has not found or has wrong format"
         }

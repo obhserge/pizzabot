@@ -34,6 +34,8 @@
 		FD93800426F892230060DDE6 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93800226F892230060DDE6 /* Parser.swift */; };
 		FD93800626F892950060DDE6 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93800526F892950060DDE6 /* Validator.swift */; };
 		FD93800726F892950060DDE6 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93800526F892950060DDE6 /* Validator.swift */; };
+		FD93800A26F8ACB60060DDE6 /* ParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93800826F8ACB60060DDE6 /* ParserTest.swift */; };
+		FD93800D26F8ACE50060DDE6 /* ValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93800B26F8ACE50060DDE6 /* ValidatorTest.swift */; };
 		FDF1FA3F26EF643B003EF846 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6503515A26E7A54900C04F22 /* main.swift */; };
 		FDF1FA4026EF643F003EF846 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6503516126E7A56600C04F22 /* ActionType.swift */; };
 		FDF1FA4326EF6445003EF846 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4E9AB826EF2A280035C392 /* String+Extensions.swift */; };
@@ -72,6 +74,8 @@
 		FD937FFF26F863800060DDE6 /* InputParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputParser.swift; sourceTree = "<group>"; };
 		FD93800226F892230060DDE6 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		FD93800526F892950060DDE6 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		FD93800826F8ACB60060DDE6 /* ParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTest.swift; sourceTree = "<group>"; };
+		FD93800B26F8ACE50060DDE6 /* ValidatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +165,8 @@
 			children = (
 				FD4E9AC226EF3F060035C392 /* PizzabotTest.swift */,
 				FD4E9AC426EF3F060035C392 /* Info.plist */,
+				FD93800826F8ACB60060DDE6 /* ParserTest.swift */,
+				FD93800B26F8ACE50060DDE6 /* ValidatorTest.swift */,
 			);
 			path = PizzabotTest;
 			sourceTree = "<group>";
@@ -282,8 +288,10 @@
 				FD4E9AC326EF3F060035C392 /* PizzabotTest.swift in Sources */,
 				FD93800126F863800060DDE6 /* InputParser.swift in Sources */,
 				FD47A41B26F4A78F00CD4CBE /* Pointable.swift in Sources */,
+				FD93800A26F8ACB60060DDE6 /* ParserTest.swift in Sources */,
 				FD24A28E26F093CF00E4AD40 /* Pizzabot.swift in Sources */,
 				FD47A41226F4871F00CD4CBE /* DeliveryArea.swift in Sources */,
+				FD93800D26F8ACE50060DDE6 /* ValidatorTest.swift in Sources */,
 				FD47A40F26F486C900CD4CBE /* Point.swift in Sources */,
 				FDF1FA4426EF6447003EF846 /* Int+Extensions.swift in Sources */,
 				FD47A41E26F4C94A00CD4CBE /* PizzabotProtocol.swift in Sources */,

@@ -25,7 +25,7 @@ final class InputValidator: Validator {
     }
     
     func validateDeliveryPoints(_ points: [Point]) -> Error? {
-        guard points.count > 0 else { return ValidatorError.noPoints }
+        guard points.count > 0 else { return ValidatorError.pointsNotFound }
         return nil
     }
     
